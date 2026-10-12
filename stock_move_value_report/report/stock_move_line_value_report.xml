@@ -118,14 +118,13 @@
 
     <template id="report_stock_move_value_document">
         <t t-call="web.html_container">
-            <t t-call="web.external_layout">
+            <t t-call="web.external_layout" ml_from_inventories.translate="">
                 <div class="page">
                     <h2 class="mb48">Selected operations cost value</h2>
                     <t
                         t-set="ml_from_pickings"
                         t-value="move_lines_ids.filtered('move_id.picking_id')"
                     />
-                    <t t-set="ml_from_inventories" />
                     <t
                         t-set="ml_from_scraps"
                         t-value="move_lines_ids.filtered('move_id.scrap_id')"
@@ -145,22 +144,15 @@
                                 t-out="picking.date_done"
                             />]</span> Picking <t t-out="picking.name" />: <t
                                 t-out="picking.location_id.name"
-                            /> &#8594; <t t-out="picking.location_dest_id.name" /></h4>
-                            <t t-call="stock_move_value_report.stock_move_lines_value">
-                                <t t-set="move_lines" t-value="picking_move_lines" />
-                                <t
-                                    t-set="currency_id"
-                                    t-value="picking.company_id.currency_id"
-                                />
-                            </t>
+                            /> → <t t-out="picking.location_dest_id.name" /></h4>
+                            <t t-call="stock_move_value_report.stock_move_lines_value"
+                                move_lines="picking_move_lines"
+                                currency_id="picking.company_id.currency_id"/>
                             <t
                                 t-call="stock_move_value_report.stock_move_lines_value_total"
+                                move_lines="picking_move_lines"
+                                currency_id="picking.company_id.currency_id"
                             >
-                                <t t-set="move_lines" t-value="picking_move_lines" />
-                                <t
-                                    t-set="currency_id"
-                                    t-value="picking.company_id.currency_id"
-                                />
                             </t>
                         </t>
                     </t>
@@ -180,26 +172,20 @@
                                     t-out="scrap_move.date"
                                 />]</span> Scrap <t t-out="scrap.name" />: <t
                                     t-out="scrap.location_id.name"
-                                /> &#8594; <t
+                                /> → <t
                                     t-out="scrap.scrap_location_id.name"
                                 /></h4>
                                 <t
                                     t-call="stock_move_value_report.stock_move_lines_value"
+                                    move_lines="scrap_move_lines"
+                                    currency_id="res_company.currency_id"
                                 >
-                                    <t t-set="move_lines" t-value="scrap_move_lines" />
-                                    <t
-                                        t-set="currency_id"
-                                        t-value="res_company.currency_id"
-                                    />
                                 </t>
                                 <t
                                     t-call="stock_move_value_report.stock_move_lines_value_total"
+                                    move_lines="scrap_move_lines"
+                                    currency_id="res_company.currency_id"
                                 >
-                                    <t t-set="move_lines" t-value="scrap_move_lines" />
-                                    <t
-                                        t-set="currency_id"
-                                        t-value="res_company.currency_id"
-                                    />
                                 </t>
                             </t>
                         </t>
@@ -233,9 +219,8 @@
     </template>
 
     <template id="report_stock_move_line_value">
-        <t t-call="stock_move_value_report.report_stock_move_value_document">
-            <t t-set="move_lines_ids" t-value="docs" />
-            <t t-set="currency_id" t-value="res_company.currency_id" />
-        </t>
+        <t t-call="stock_move_value_report.report_stock_move_value_document"
+            move_lines_ids="docs"
+            currency_id="res_company.currency_id"/>
     </template>
 </odoo>

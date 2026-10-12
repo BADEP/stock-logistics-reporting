@@ -46,21 +46,13 @@
                     </table>
                     <br />
                     <br />
-                    <t t-call="stock_move_value_report.stock_move_lines_value">
-                        <t
-                            t-set="move_lines"
-                            t-value="scrap.mapped('move_ids').mapped('move_line_ids')"
-                        />
-                        <t t-set="currency_id" t-value="res_company.currency_id" />
-                    </t>
+                    <t t-call="stock_move_value_report.stock_move_lines_value"
+                        move_lines="scrap.mapped('move_ids').mapped('move_line_ids')"
+                        currency_id="res_company.currency_id"/>
                     <br />
-                    <t t-call="stock_move_value_report.stock_move_lines_value_total">
-                        <t
-                            t-set="move_lines"
-                            t-value="scrap.mapped('move_ids').mapped('move_line_ids')"
-                        />
-                        <t t-set="currency_id" t-value="res_company.currency_id" />
-                    </t>
+                    <t t-call="stock_move_value_report.stock_move_lines_value_total"
+                        move_lines="scrap.mapped('move_ids').mapped('move_line_ids')"
+                        currency_id="res_company.currency_id"/>
                 </div>
             </t>
         </t>
